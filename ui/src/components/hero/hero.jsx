@@ -6,9 +6,9 @@ export default function Hero() {
     <div className=' '>
         <div className="flex justify-around   ">
               <div className="flex flex-col w-[40%] text-left pl-20 mt-auto mb-auto m-4">
-                 <h1 className='text-6xl pt-4 weight-900'>Unleash Your Inner Elegance</h1>
+                 <h1 className='text-6xl pt-4 font-bold pb-4 '>Unleash Your Inner Elegance</h1>
                 
-                 <p className='text-sm py-4 w-3/4'>Enhance your natural beauty with our exquisite products and indulge in our expert salon services for a transformative and rejuvenating experience.</p>
+                 <p className='text-sm py-4 w-3/4 font-light'>Enhance your natural beauty with our exquisite products and indulge in our expert salon services for a transformative and rejuvenating experience.</p>
 
                  <div className='flex space-x-6 pt-10'>
                     <button className='px-8 py-2 bg-blue-400 text-white rounded-full'> BUY NOW</button>
