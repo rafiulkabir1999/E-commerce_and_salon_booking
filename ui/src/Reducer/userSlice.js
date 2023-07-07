@@ -20,7 +20,7 @@ const initialState={
     }
 }
 
-export const Register=createAsyncThunk('user/Register',async(user,thunkAPI)=>{
+export const Register= createAsyncThunk('user/Register',async(user,thunkAPI)=>{
     try {
           const response=await User.register(user)
           console.log(response)
@@ -35,7 +35,7 @@ export const Register=createAsyncThunk('user/Register',async(user,thunkAPI)=>{
     }
 })
 
-export const Login = createAsyncThunk('user/Login',async(data,thunkAPI) => {
+export const userLogin = createAsyncThunk('user/Login',async(data,thunkAPI) => {
 
     return await User.login(data)
 

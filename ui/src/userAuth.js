@@ -17,7 +17,7 @@ export const UserAuth = () => {
 const ProtectedRoute = () => {
     const L =UserAuth();
    
-    return true ? <Outlet/> : <Login/> 
+    return L ? <Outlet/> : <Login/> 
 }
 
 export default ProtectedRoute;
