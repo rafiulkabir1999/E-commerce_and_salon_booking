@@ -4,31 +4,34 @@ const bcrypt = require("bcrypt")
 
 const Router = express.Router();
 
-Router.post('/login',(req,res) => {
-     
+Router.post('/login',async(req,res) => {
+    console.log(req.body.phone)
+  try {
+     const user =await  UserModel.find({phone:req.body.phone})
+     const match = await bcrypt.compare(req.body.password, user[0].password);
+    if(match){
+      console.log("Login SuccessFully")
+      res.send("success")
+    }
+  } catch (error) {
+    res.send('Login Failed')
+  }
 })
 
 Router.post('/register',async(req,res) => {
      const {name,phone,password} = req.body
   try {
-    bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(password, salt, function(err, hash) {
-          password = hash
-        });
-    });
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
 
     if(name && phone && password){
 
-       
-      
-    
-      console.log(genHash())
       const user =  new UserModel({
         name:name,
         phone:phone,
-        password:password
+        password:hash
       })
-     // await  user.save();
+      await  user.save();
 
         res.send("user register successfully")
     }
