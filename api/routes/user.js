@@ -1,22 +1,10 @@
 const express = require('express')
-const UserModel = require("../model/user.js")
-const bcrypt = require("bcrypt")
+const {Login} = require('../controller/user.js')
 
 const Router = express.Router();
 
-Router.post('/login',async(req,res) => {
-    console.log(req.body.phone)
-  try {
-     const user =await  UserModel.find({phone:req.body.phone})
-     const match = await bcrypt.compare(req.body.password, user[0].password);
-    if(match){
-      console.log("Login SuccessFully")
-      res.send("success")
-    }
-  } catch (error) {
-    res.send('Login Failed')
-  }
-})
+Router.post('/login',Login)
+
 
 Router.post('/register',async(req,res) => {
      const {name,phone,password} = req.body
