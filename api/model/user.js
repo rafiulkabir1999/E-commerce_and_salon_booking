@@ -16,6 +16,7 @@ const Model = mongoose.Schema({
     },
     isAdmin:{
         type:Boolean,
+        default:false,
         
     },
   },

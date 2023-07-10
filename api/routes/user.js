@@ -1,40 +1,26 @@
 const express = require('express')
-const { Login } = require('../controller/user.js')
-const {VerifyToken, VerifyAdmin} = require('../utils/verifyJWT.js')
+const { Login,Register ,Update } = require('../controller/user.js')
+const {VerifyToken, VerifyAdmin} = require('../utils/verifyJWT.js');
+const bcrypt = require('bcrypt')
+
 
 const Router = express.Router();
-
-Router.post('/login',Login)
 
 Router.get("/verifylogin", VerifyToken,(req,res)=>{
   res.send("You are logedin")
 })
 
 Router.get("/verifyadmin", VerifyAdmin,(req,res)=>{
-  res.send("You are logedin")
+  res.send("You are admin")
 })
 
-Router.post('/register',async(req,res) => {
-     const {name,phone,password} = req.body
-  try {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(password, salt);
 
-    if(name && phone && password){
 
-      const user =  new UserModel({
-        name:name,
-        phone:phone,
-        password:hash
-      })
-      await  user.save();
+Router.post('/login',Login)
 
-        res.send("user register successfully")
-    }
-  } catch (error) {
-     res.status(500)
-  }
+Router.post('/register',Register)
 
-})
+Router.put('/update/:id',Update)
+
 
 module.exports = Router

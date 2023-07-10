@@ -21,16 +21,14 @@ const VerifyToken = (req,res,next) => {
 const VerifyAdmin = (req,res,next ) => {
     try {
         const token = req.cookies.access_token
-        if(!token) next(CreateError(401,'not authenticated'))
-        jwt.verify(token,process.env.JWT_SECRET,(err,user) => {
-            if(err) next(CreateError(401,'not authentication'))
-            if(req.user.isAdmin == user.isAdmin){
-                next()
-            }
-            else next(CreateError(403,'Not Authorizer'))
+        VerifyToken(req,res,next,()=>{
+
+            if(user.isAdmin === req.user.isAdmin) next();
+            else next(CreateError('403','not authorize'))
         })
+        }
         
-    } catch (error) {
+     catch (error) {
         next(500,'something went wrong')
     }
 }
