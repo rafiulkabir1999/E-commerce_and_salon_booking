@@ -1,7 +1,10 @@
  const UserModel = require("../model/user.js")
  const bcrypt = require("bcrypt")
  const jwt = require('jsonwebtoken')
- const Login = async(req,res,next) => {
+ const {CreateError} = require("../utils/error.js")
+
+
+  const Login = async(req,res,next) => {
     
     try {
        const user =await  UserModel.find({phone:req.body.phone})
@@ -12,9 +15,9 @@
           httpOnly:true
         }).send("success")
       }
-      else next(err)
+      else next(CreateError(404,'user not found'))
     } catch (error) {
-     next(error)
+      next(CreateError(500,'someting went wrong'))
     }
 }
 module.exports={Login}

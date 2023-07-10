@@ -1,14 +1,12 @@
 const dotenv = require( 'dotenv')
-
 const express = require( 'express')
 const bodyParser = require( 'body-parser')
 const mongoose = require( 'mongoose')
 const cors = require( 'cors')
 const userRouter = require( './routes/user.js')
 const cookieParser = require("cookie-parser")
-dotenv.config();
 //const AdminRouter = require( './routes/admin.js')
-//const Product = require( './routes/product.js')
+const Product = require( './routes/product.js')
 const path  = require( 'path')
 //const cookieParser = require( 'cookie-parser')
 //const orderController = require( './controller/product/product.js')
@@ -32,6 +30,7 @@ app.use(cors({
  
 
 app.use('/user',userRouter)
+app.use('/product',Product)
 //app.use('/admin',AdminRouter)
 //app.use('/product',Product)
 //app.use('/user',userRouter)

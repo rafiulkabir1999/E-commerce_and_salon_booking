@@ -14,7 +14,7 @@ const Model = mongoose.Schema({
         type:String,
         require:true,
     },
-    isAmdin:{
+    isAdmin:{
         type:Boolean,
         
     },
