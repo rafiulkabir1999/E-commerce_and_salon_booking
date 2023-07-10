@@ -8,15 +8,20 @@
 const Login = async(req,res,next) => {
     
     try {
-       const user =await  UserModel.find({phone:req.body.phone})
-       const match = await bcrypt.compare(req.body.password, user[0].password);
+       const user = await  UserModel.findOne({phone:req.body.phone})
+      
+      if(!user) next(CreateError(404,"user not found")) 
+      
+      const match = await bcrypt.compare(req.body.password, user.password);
       if(match){
         const token = jwt.sign({ id: user._id, isAdmin : user.isAdmin},process.env.JWT_SECRET)
         res.cookie('access_token',token,{
           httpOnly:true
         }).send("success")
       }
-      else next(CreateError(404,'user not found'))
+      else next(CreateError(401,'Unauthorized'))
+
+
     } catch (error) {
       next(CreateError(500,'someting went wrong'))
     }
@@ -28,7 +33,8 @@ const Register = async(req,res,next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
-    const exsisting_user = await UserModel.find({phone:phone})
+    const exsisting_user = await UserModel.findOne({phone:phone})
+
    if(exsisting_user){
       next(CreateError(409,'user already exist'))
    }
@@ -52,8 +58,10 @@ const Register = async(req,res,next) => {
 
 const Update = async(req,res,next) => {
   try {
-    const salt =  bcrypt.genSaltSync(10);
-    req.body.password =  bcrypt.hashSync(req.body.password, salt);
+    if(req.body.password){
+      const salt =  bcrypt.genSaltSync(10);
+      req.body.password =  bcrypt.hashSync(req.body.password, salt);
+    }
    
      const user = await UserModel.findByIdAndUpdate(req.params.id,{$set: req.body},{new:true})
      res.status(200).json(user)

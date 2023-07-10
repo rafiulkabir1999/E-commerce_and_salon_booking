@@ -10,12 +10,12 @@ const model = mongoose.Schema({
         require:true,
      },
      rating:{
-        type:String,
+        type:Number,
      },
      size:{
         type:String,
      },
-     color:[String],
+     color:String,
      available:{
         type:Boolean
      },

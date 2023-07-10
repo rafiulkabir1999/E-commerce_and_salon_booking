@@ -10,7 +10,7 @@ const VerifyToken = (req,res,next) => {
         }
         jwt.verify(token,process.env.JWT_SECRET,(err,user) => {
             if(err) return next(CreateError(403,'Token is not valid'))
-            req.user=user
+            req.user = user
             next();
         })
       } catch(err) {
@@ -19,11 +19,9 @@ const VerifyToken = (req,res,next) => {
 }
 
 const VerifyAdmin = (req,res,next ) => {
-    try {
-        const token = req.cookies.access_token
-        VerifyToken(req,res,next,()=>{
-
-            if(user.isAdmin === req.user.isAdmin) next();
+    try { 
+        VerifyToken(req,res,()=>{  
+            if(req.user.isAdmin) next();
             else next(CreateError('403','not authorize'))
         })
         }
