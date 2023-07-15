@@ -1,7 +1,10 @@
 const Product_Model = require("../../model/product.js")
+const upload = require("../fileuploader.js")
 
 const create = async(req,res,next) => {
    try {
+     //console.log(upload.single('img'))
+     console.log(req.file)
      const product = new Product_Model(req.body)
      await product.save();
      res.send(req.body)

@@ -16,7 +16,7 @@ const app =express()
 dotenv.config();
 
 
-app.use('/photo', express.static('uploads'));
+app.use('/photo', express.static('public/uploads'));
 
 app.use(cookieParser())
 app.use(bodyParser.json({limit:"30mb",extended:true}))
