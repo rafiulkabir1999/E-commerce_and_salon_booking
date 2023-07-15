@@ -19,6 +19,20 @@ const model = mongoose.Schema({
      available:{
         type:Boolean
      },
+     img:{
+      regular:{
+        filename:String,
+        url:String
+      },
+      small:{
+         filename:String,
+        url:String
+      },
+      extrasmall:{
+         filename:String,
+        url:String
+      }
+     }
 },{timestamps:true})
 
 const Model = mongoose.model("product",model)

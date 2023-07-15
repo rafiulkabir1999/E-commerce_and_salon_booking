@@ -1,9 +1,13 @@
 # dependencies
 api/node_modules
+api/public
 api/.env
+
+
 ui/node_modules
 /.pnp
 .pnp.js
+
 
 # testing
 /coverage

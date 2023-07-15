@@ -16,8 +16,7 @@ const app =express()
 dotenv.config();
 
 
-app.use('/photo', express.static('public/uploads'));
-
+app.use('/photo', express.static(path.join(__dirname, 'public')));
 app.use(cookieParser())
 app.use(bodyParser.json({limit:"30mb",extended:true}))
 app.use(bodyParser.urlencoded({limit:"30mb",extended:true}))
@@ -28,7 +27,7 @@ app.use(cors({
 }))
 
  
-
+app.get('/',(req,res)=>{res.send("woriking")})
 app.use('/user',userRouter)
 app.use('/product',Product)
 //app.use('/admin',AdminRouter)
