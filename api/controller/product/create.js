@@ -3,8 +3,11 @@ const deletefile = require("../deletefile.js")
 const upload = require("../fileuploader.js")
 const resizeImage = require('../resizefile.js')
 const HOST =process.env.HOST || "localhost:4000/"
+const path = require('path')
+const fs = require('fs')
+const { CreateError } = require("../../utils/error.js")
 
-
+//create product
 const create = async(req,res,next) => {
    try {
   
@@ -30,7 +33,7 @@ const create = async(req,res,next) => {
       next(error)
    }
 }
-
+//update product
 const update = async(req,res,next) => {
     try {
 
@@ -56,14 +59,27 @@ const update = async(req,res,next) => {
        next(error)
     }
  }
-
+//delete product
  const delete_product = async(req,res,next) => {
    try {
-  deletefile(req,res,async()=>{
+
+    const product =await Product_Model.findOne({ _id : req.params.id})
+    console.log(product)
+    if(product === null || product === undefined){
+      next(CreateError(404,"product not found"))
+    }
     
-    await Product_Model.findByIdAndDelete(req.params.id)
+   
+    const url = path.join(__dirname,"../../public/uploads/" + product.img.regular.filename)
+    const urlsmall = path.join(__dirname,"../../public/small/" + product.img.small.filename)
+     
+    await Product_Model.findByIdAndDelete(req.params.id).then(()=>{
+      fs.unlinkSync(url)
+      fs.unlinkSync(urlsmall)
+    })
+   
     res.send("Product has been remove from your database")
-  })
+  
     
    } catch (error) {
       next(error)
