@@ -11,33 +11,8 @@ const { CreateError } = require("../../utils/error.js")
 const create = async(req,res,next) => {
    try {
   
-     resizeImage(req , res , async()=> {
-
-      req.body.img = {
-        regular :{
-          filename: req.file.filename,
-          url:HOST + "photo/uploads/" +req.file.filename,
-        }, 
-        small :{
-          filename: req.file.filename,
-          url: HOST + "photo/small/" +req.file.filename
-        } }
-        const product = new Product_Model(req.body)
-        await product.save();
-       res.send(req.body)
-       
-     })
-     
-    
-   } catch (error) {
-      next(error)
-   }
-}
-//update product
-const update = async(req,res,next) => {
-    try {
-
-      resizeImage(req , res , async()=> {
+    if(req.file){
+      resizeImage(req.file).then(async()=> {
 
         req.body.img = {
           regular :{
@@ -49,12 +24,53 @@ const update = async(req,res,next) => {
             url: HOST + "photo/small/" +req.file.filename
           } 
         }
-      await Product_Model.findByIdAndUpdate(req.params.id,req.body)
-      res.send(req.body)
-        
-      })
+          const product = new Product_Model(req.body)
+          await product.save();
+         res.send(req.body)
+         
+       })
+    }
      
+    
+   } catch (error) {
+      next(error)
+   }
+}
+//update product
+const update = async(req,res,next) => {
+    try {
      
+      if(req.file){
+        resizeImage(req.file).then(async()=> {
+
+          const url = Product_Model.findOne({ _id : req.params.id})
+          
+             req.body.img = {
+               regular :{
+                 filename: req.file.filename,
+                 url:HOST + "photo/uploads/" +req.file.filename,
+               }, 
+               small :{
+                 filename: req.file.filename,
+                 url: HOST + "photo/small/" +req.file.filename
+               } 
+             }
+             const result = await Product_Model.findByIdAndUpdate(req.params.id,req.body,{new:true})
+             res.send(result)
+         
+          res.send(req.body)
+           
+        })
+    
+      }
+    
+     else{
+      console.log("see")
+      console.log(req.body)
+      const result = await Product_Model.findByIdAndUpdate(req.params.id,req.body,{new:true})
+      res.send(result)
+     }
+
     } catch (error) {
        next(error)
     }
@@ -75,7 +91,7 @@ const update = async(req,res,next) => {
      
     await Product_Model.findByIdAndDelete(req.params.id).then(()=>{
       fs.unlinkSync(url)
-      fs.unlinkSync(urlsmall)
+     fs.unlinkSync(urlsmall)
     })
    
     res.send("Product has been remove from your database")
