@@ -9,6 +9,10 @@ const model = mongoose.Schema({
         type:Number,
         require:true,
      },
+      cetegory:{
+         type:String,
+         require:true
+      },
      rating:{
         type:Number,
      },
@@ -28,6 +32,7 @@ const model = mongoose.Schema({
          filename:String,
         url:String
       },
+     
       extrasmall:{
          filename:String,
         url:String

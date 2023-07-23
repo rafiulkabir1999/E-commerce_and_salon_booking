@@ -43,7 +43,7 @@ const update = async(req,res,next) => {
       if(req.file){
         resizeImage(req.file).then(async()=> {
 
-          const url = Product_Model.findOne({ _id : req.params.id})
+         
           
              req.body.img = {
                regular :{
@@ -58,15 +58,13 @@ const update = async(req,res,next) => {
              const result = await Product_Model.findByIdAndUpdate(req.params.id,req.body,{new:true})
              res.send(result)
          
-          res.send(req.body)
+          
            
         })
     
       }
     
      else{
-      console.log("see")
-      console.log(req.body)
       const result = await Product_Model.findByIdAndUpdate(req.params.id,req.body,{new:true})
       res.send(result)
      }
