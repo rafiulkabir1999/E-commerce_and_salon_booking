@@ -14,11 +14,10 @@ const allReserve =async(req , res , next) => {
 const booking = async(req,res,next) => {
    try {
     const {name,phone , date , beautician , service , time} = req.body
-    console.log(phone)
     if(!name || !phone || !date || !beautician || !service || !time){
           next(CreateError(300,'invalid input'))
     }
-    const reserve = new Reserve(
+    await Reserve.create(
         {name:name,
         phone:phone,
         date:date,
@@ -26,8 +25,7 @@ const booking = async(req,res,next) => {
         service:service,
         time:time}
         )
-        await reserve.validate()
-    await reserve.save()
+
     res.send(req.body)
    } catch (error) {
       next(error)
