@@ -2,13 +2,20 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDroplet,faCaretDown ,faCheck} from '@fortawesome/free-solid-svg-icons'
 import Product from '../product/product'
-
+import { useEffect } from 'react'
+import {useDispatch ,useSelector} from 'react-redux'
+import { Display_product } from '../../Reducer/productSlice'
 export default function Shop() {
 
-
+const dispatch = useDispatch();
+const {product} = useSelector(state => state.product)
  const selectColor = (id) => {
   document.getElementById(id).classList.toggle('hidden')
  }
+
+useEffect(()=> {
+ dispatch(Display_product())
+},[])
 
   return (
     <div className='container mx-auto'>
@@ -201,25 +208,14 @@ export default function Shop() {
 
       <div className='grow block'>
              <div className='grid grid-cols-3 '>
-                <span className='border-r border-b' >
-                  <Product id='0'/>
-                </span>
-                <span className='border-r border-b'>
-                     <Product id='1'/>
-                </span>
-                <span className='border-r border-b'>
-                   <Product id='2'/>
-                </span>
-                <span className='border-r border-b'>
-                   <Product id='3'/>
-                </span>
-                 
-                 <span className='border-r border-b'>
-                  <Product id='4'/>
-                 </span>
-                  <span className='border-r border-b'>
-                     <Product id='5'/>
-                  </span>
+
+              { product.map(e => {
+                return <span className='border-r border-b' >
+                         <Product  details={e} />
+                       </span>
+              })}
+                
+               
                  
              </div>
       </div>

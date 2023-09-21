@@ -14,10 +14,18 @@ export const UserAuth = () => {
     else return false;
 }
 
+// const AdminAuth = () => {
+//     const
+// }
+
 const ProtectedRoute = () => {
     const L =UserAuth();
    
     return L ? <Outlet/> : <Login/> 
 }
+
+// export const ProtecAdmin = () => {
+//     const admin = 
+// }
 
 export default ProtectedRoute;

@@ -35,9 +35,11 @@ export default function Nav() {
                      <FontAwesomeIcon icon={faShoppingCart} size='md' color='black' />
                      </Link>
                    </div>
-                   <div className='w-8 h-8  p-3 flex items-center justify-center  cursor-pointer hover:bg-orange-400 rounded-full'>
-                   <FontAwesomeIcon icon={faUser} size='md' color='black' />
-                   </div>
+                   <Link to='/login'>
+                    <div className='w-8 h-8  p-3 flex items-center justify-center  cursor-pointer hover:bg-orange-400 rounded-full'>
+                      <FontAwesomeIcon icon={faUser} size='md' color='black' />
+                    </div> 
+                   </Link>
                   </div>
              </div>
 
