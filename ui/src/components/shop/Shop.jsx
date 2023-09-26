@@ -5,17 +5,22 @@ import Product from '../product/product'
 import { useEffect } from 'react'
 import {useDispatch ,useSelector} from 'react-redux'
 import { Display_product } from '../../Reducer/productSlice'
+import ShowAllProduct from './ShowAllProduct'
 export default function Shop() {
 
 const dispatch = useDispatch();
-const {product} = useSelector(state => state.product)
+
  const selectColor = (id) => {
   document.getElementById(id).classList.toggle('hidden')
  }
 
-useEffect(()=> {
- dispatch(Display_product())
-},[])
+ useEffect(()=> {
+  const getp = async() => {
+     await dispatch(await Display_product())
+    
+  }
+getp()
+ },[])
 
   return (
     <div className='container mx-auto'>
@@ -207,17 +212,13 @@ useEffect(()=> {
 
 
       <div className='grow block'>
-             <div className='grid grid-cols-3 '>
+           
 
-              { product.map(e => {
-                return <span className='border-r border-b' >
-                         <Product  details={e} />
-                       </span>
-              })}
+            <ShowAllProduct  />
                 
                
                  
-             </div>
+           
       </div>
 
       </div>

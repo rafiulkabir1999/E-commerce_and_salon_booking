@@ -69,4 +69,13 @@ const Update = async(req,res,next) => {
     next(error)
   }
 }
-module.exports={Login, Register ,Update}
+
+const GetallUser = async(req,res,next) => {
+  try {
+    const users = await UserModel.find();
+    res.send(users)
+  } catch (error) {
+    CreateError(error)
+  }
+}
+module.exports={Login, Register ,Update,GetallUser}

@@ -1,5 +1,5 @@
 const express = require('express')
-const { Login,Register ,Update } = require('../controller/user.js')
+const { Login,Register ,Update ,GetallUser } = require('../controller/user.js')
 const {VerifyToken, VerifyAdmin} = require('../utils/verifyJWT.js');
 const bcrypt = require('bcrypt')
 
@@ -14,6 +14,7 @@ Router.get("/verifyadmin", VerifyAdmin,(req,res)=>{
   res.send("You are admin")
 })
 
+Router.get("/getalluser", VerifyAdmin,GetallUser)
 
 
 Router.post('/login',Login)

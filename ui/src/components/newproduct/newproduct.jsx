@@ -1,7 +1,9 @@
 import React from 'react'
 import Product from '../product/product'
+import { useSelector } from 'react-redux'
 
 export default function Newproduct() {
+  const {product} = useSelector(state => state.product)
   return (
     <div className='container mx-auto mt-10'>
         <div className="flex justify-between py-4 px-1">
@@ -20,11 +22,9 @@ export default function Newproduct() {
 
 
         <div className=" flex space-x-6">
-           <Product id="1" /> 
-           <Product id='2' />
-           <Product id='3' />
-           <Product id='4' />
-           <Product id='5' />
+          {product.map( e=> {
+            return <Product details={e} url={e.img.small.url}/>
+          })}
         </div>
 
     </div>

@@ -124,7 +124,7 @@ useEffect(()=>{
      <form  onSubmit={submit} className="mt-6 space-y-6 ">
          
             <div>
-                      <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                      <label for="email" className="block mb-2p-1  text-sm font-medium text-gray-900 dark:text-white">Name</label>
                       <input
                        type="text" 
                        name="name" 
@@ -136,7 +136,7 @@ useEffect(()=>{
             </div>
             
                  <div>
-                      <label for="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
+                      <label for="phone" className="block mb-2 p-1 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
                       <input  
                       value={phone} 
                       onChange={onchange}
@@ -148,7 +148,7 @@ useEffect(()=>{
                   <div className="relative">
                       <label 
                       for="password" 
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                      className="block mb-2 p-1 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                      
                       <input type="password" name="password" id="password" 
                       value={password}
@@ -166,7 +166,7 @@ useEffect(()=>{
                   <div className="relative">
                       <label 
                       for="password-confirm" 
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>
+                      className="block mb-2 p-1 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>
                      
                       <input type="password" name="confirm_password" id="password-confirm" 
                       value={confirm_password}
