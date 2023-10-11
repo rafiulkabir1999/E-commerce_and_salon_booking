@@ -12,6 +12,7 @@ import Cart from './components/Cart/Cart';
 import Signup from './components/Accounts/Signup/signup';
 import { ToastContainer, toast } from 'react-toastify'
 import Login from './components/Accounts/Login/Login';
+import Profile from './components/profile/profile';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route element={<ProtectedRoute/>}>
             <Route path='/cart' element={<Cart/>}/>
             <Route path='/booknow' element={<Booknow/>}/>
+            <Route path='/profile' element={<Profile/>}/>
             
           </Route>
         </Routes>

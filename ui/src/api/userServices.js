@@ -12,12 +12,16 @@ const login = async(data) =>{
     const response = await axios.post(Localhost+"/user/login",data,{withCredentials:true})
     return response.data
 }
+const logout = async(data) => {
+    const response = await axios.get(Localhost+"/user/logout")
+    return response
+}
 
 
 
 const userRegister={
     register,
-    login
+    login,logout
 }
 
 export default userRegister;

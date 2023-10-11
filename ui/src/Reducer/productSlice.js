@@ -21,9 +21,9 @@ const ProuctSlice = createSlice({
     name:'product',
     initialState,
     reducers:{
-      show:(state=initialState,action) => {
-
-      },
+      setProduct:(state , action) => {
+        state.product = action.payload
+       }
     },
     extraReducers:(builder) => {
      builder.addCase(Display_product.fulfilled,(state,action) => {
@@ -33,5 +33,5 @@ const ProuctSlice = createSlice({
     }
 })
 
-export const { show } = ProuctSlice.actions
+export const { setProduct } = ProuctSlice.actions
 export default  ProuctSlice.reducer

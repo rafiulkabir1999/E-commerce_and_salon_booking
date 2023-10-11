@@ -13,11 +13,8 @@ const initialState={
     loginerror:false,
     loginsuccess:false,
     loginmessage : '',
-    loginuser:{
-       name:null,
-       phone:null,
-       type:null,
-    }
+  
+    userinfo: localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
 }
 
 export const Register= createAsyncThunk('user/Register',async(user,thunkAPI)=>{
@@ -42,6 +39,10 @@ export const userLogin = createAsyncThunk('user/Login',async(data,thunkAPI) => {
 
 })
 
+export const userLogout = createAsyncThunk('user/Logout',async(data,thunkAPI) => {
+    return await User.logout(data)
+})
+
 const userSlice=createSlice({
     name:'user',
     initialState,
@@ -52,10 +53,23 @@ const userSlice=createSlice({
             state.success = false
             state.message=''
 
-        },
+        }
+       
 
     },
     extraReducers:(builder)=>{
+
+         builder.addCase(userLogin.fulfilled,(state,action) => {
+            state.userinfo  = action.payload
+            localStorage.setItem('userInfo', JSON.stringify(action.payload));
+         })
+         builder.addCase(userLogout.fulfilled,(state,action) => {
+            state.userinfo = null
+            localStorage.removeItem('userInfo');
+         })
+
+
+
         builder.addCase(Register.pending,(state,action)=>{
             state.loading=true
             state.success=false

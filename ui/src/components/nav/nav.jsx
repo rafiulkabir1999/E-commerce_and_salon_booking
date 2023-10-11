@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faShoppingCart,faUser } from '@fortawesome/free-solid-svg-icons'
 import {Link} from 'react-router-dom'
 export default function Nav() {
+
+  const [loginOrprofile,setlogprofile] = useState('/login')
+  const status = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+  console.log(status)
+  
+  useEffect(() => {
+ 
+  if(!status){
+    setlogprofile('/profile')
+  }
+  
+  },[])
   return (
     <div className="">
       
@@ -35,7 +47,7 @@ export default function Nav() {
                      <FontAwesomeIcon icon={faShoppingCart} size='md' color='black' />
                      </Link>
                    </div>
-                   <Link to='/login'>
+                   <Link to={loginOrprofile} >
                     <div className='w-8 h-8  p-3 flex items-center justify-center  cursor-pointer hover:bg-orange-400 rounded-full'>
                       <FontAwesomeIcon icon={faUser} size='md' color='black' />
                     </div> 

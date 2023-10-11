@@ -4,22 +4,23 @@ import { faDroplet,faCaretDown ,faCheck} from '@fortawesome/free-solid-svg-icons
 import Product from '../product/product'
 import { useEffect } from 'react'
 import {useDispatch ,useSelector} from 'react-redux'
-import { Display_product } from '../../Reducer/productSlice'
+import { setProduct } from '../../Reducer/productSlice'
 import ShowAllProduct from './ShowAllProduct'
+import {  useGetProductsQuery } from '../../Reducer/productSliceQ'
+import { toast } from 'react-toastify'
 export default function Shop() {
 
 const dispatch = useDispatch();
+//const [getProducts , { Loading }] = useGetProductsMutation()
+const {data ,isLoading ,isSuccess} = useGetProductsQuery()
 
  const selectColor = (id) => {
   document.getElementById(id).classList.toggle('hidden')
  }
 
- useEffect(()=> {
-  const getp = async() => {
-     await dispatch(await Display_product())
-    
-  }
-getp()
+ useEffect(()=>{
+  isSuccess && dispatch(setProduct(data))
+  console.log('hi')
  },[])
 
   return (

@@ -18,6 +18,17 @@ const VerifyToken = (req,res,next) => {
       }
 }
 
+const VerifyUser = (req,res,next) => {
+    try {
+      VerifyToken(req,res,() => {
+        if(req.user.phone === req.params.phone)next()
+        else next(CreateError('403','not authorized'))
+      })
+      } catch(err) {
+         next(CreateError(500,'something went wrong'))
+      }
+}
+
 const VerifyAdmin = (req,res,next ) => {
     try { 
         VerifyToken(req,res,()=>{  
@@ -31,4 +42,4 @@ const VerifyAdmin = (req,res,next ) => {
     }
 }
 
-module.exports = {VerifyToken , VerifyAdmin}
+module.exports = {VerifyToken , VerifyAdmin ,VerifyUser}

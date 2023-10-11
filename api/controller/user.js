@@ -3,7 +3,8 @@
  const jwt = require('jsonwebtoken')
  const {CreateError} = require("../utils/error.js")
 
-
+//@dec user login
+//@route host/user/login
 
 const Login = async(req,res,next) => {
     
@@ -14,10 +15,14 @@ const Login = async(req,res,next) => {
       
       const match = await bcrypt.compare(req.body.password, user.password);
       if(match){
-        const token = jwt.sign({ id: user._id, isAdmin : user.isAdmin},process.env.JWT_SECRET)
+        const token = jwt.sign({ id: user._id, isAdmin : user.isAdmin, phone:user.phone},process.env.JWT_SECRET)
         res.cookie('access_token',token,{
-          httpOnly:true
-        }).send("success")
+          httpOnly:true,
+          secure: process.env.NODE_ENV !== 'development', // Use secure cookies in production
+          sameSite: 'strict', // Prevent CSRF attacks
+          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        // maxAge: 60*1000, // 1 minute
+        }).send({name:user.name,phone:user.phone})
       }
       else next(CreateError(401,'Unauthorized'))
 
@@ -26,7 +31,18 @@ const Login = async(req,res,next) => {
       next(CreateError(500,'someting went wrong'))
     }
 }
-
+const Logout = async(req,res,next) => {
+  try {
+    res.cookie('jwt', '', {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    res.status(200).json({ message: 'Logged out successfully' });
+  
+  } catch (error) {
+    
+  }
+}
 
 const Register = async(req,res,next) => {
   const {name,phone,password,isAdmin} = req.body
@@ -78,4 +94,14 @@ const GetallUser = async(req,res,next) => {
     CreateError(error)
   }
 }
-module.exports={Login, Register ,Update,GetallUser}
+
+const getUserDetails = async(req,res,next) => {
+  try {
+    const user = await UserModel.findOne({phone:req.params.phone})
+    res.send(user)
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports={Login,Logout, Register ,Update,GetallUser  ,getUserDetails}

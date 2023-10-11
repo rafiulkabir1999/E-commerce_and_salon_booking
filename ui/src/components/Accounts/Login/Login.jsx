@@ -2,9 +2,14 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { userLogin } from '../../../Reducer/userSlice'
 import {useDispatch} from 'react-redux'
+import { useLoginMutation } from '../../../Reducer/userSliceQ'
+import {toast} from "react-toastify"
+import { setCredentials } from '../../../Reducer/authSlice'
 
 export default function Login() {
 
+
+const [login , {isLoading}] = useLoginMutation()
  const dispatch = useDispatch();
  const [userinfo,setuserinfo] = useState({
   phone:'',
@@ -16,9 +21,15 @@ export default function Login() {
     return{  ...state,[e.target.name]:e.target.value}
   })
  }
- const handelSubmit = (e)=>{
+ const handelSubmit = async(e)=>{
   e.preventDefault();
-   dispatch(userLogin(userinfo))
+try {
+  const res = await login(userinfo).unwrap()
+  dispatch(setCredentials({ ...res }));
+} catch (err) {
+  toast.error(err?.data?.message || err.error);
+}
+   
  }
  
 
