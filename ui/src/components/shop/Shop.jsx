@@ -1,27 +1,28 @@
-import React from 'react'
+import { faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDroplet,faCaretDown ,faCheck} from '@fortawesome/free-solid-svg-icons'
-import Product from '../product/product'
-import { useEffect } from 'react'
-import {useDispatch ,useSelector} from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { setProduct } from '../../Reducer/productSlice'
+import { useGetProductsQuery } from '../../Reducer/productSliceQ'
+import Loader from '../loader/loader'
 import ShowAllProduct from './ShowAllProduct'
-import {  useGetProductsQuery } from '../../Reducer/productSliceQ'
-import { toast } from 'react-toastify'
 export default function Shop() {
 
 const dispatch = useDispatch();
 //const [getProducts , { Loading }] = useGetProductsMutation()
 const {data ,isLoading ,isSuccess} = useGetProductsQuery()
 
+
  const selectColor = (id) => {
   document.getElementById(id).classList.toggle('hidden')
  }
 
  useEffect(()=>{
-  isSuccess && dispatch(setProduct(data))
-  console.log('hi')
- },[])
+   dispatch(setProduct(data))
+  console.log('hi',isLoading)
+ })
+
+
 
   return (
     <div className='container mx-auto'>
@@ -202,7 +203,7 @@ const {data ,isLoading ,isSuccess} = useGetProductsQuery()
                   <div className='border w-8 h-8 items-center '>8</div>
                   <div className='border w-8 h-8 items-center '>8</div>
 
-                </div>
+                </div> 
 </div>
 
 <button className='bg-blue-400 py-2 w-full text-white font-bold mt-10'>SEARCH</button>
@@ -215,9 +216,9 @@ const {data ,isLoading ,isSuccess} = useGetProductsQuery()
       <div className='grow block'>
            
 
-            <ShowAllProduct  />
+          
                 
-               
+              {isLoading ? <Loader/> :  <ShowAllProduct/>}
                  
            
       </div>
