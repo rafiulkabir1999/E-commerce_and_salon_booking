@@ -1,21 +1,13 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import productServices from "../api/productServices"
+import { createSlice } from "@reduxjs/toolkit"
 
 
 const initialState = {
-    product:[]
+    product:[],
+    cart:[],
+    text:[]
 }
 
-export const Display_product = createAsyncThunk('product/Display_product',async(state,thunkAPI) => {
-  try {
-   const response = await productServices.getproduct();
-   return response.data
-  } catch (error) {
-    const message=(error.response && error.response.data &&error.response.data.message)||
-    error.message||error.toString()
-    return thunkAPI.rejectWithValue(message)
-  }
-})
+
 
 const ProuctSlice = createSlice({
     name:'product',
@@ -23,15 +15,18 @@ const ProuctSlice = createSlice({
     reducers:{
       setProduct:(state , action) => {
         state.product = action.payload
+       },
+       addToCart:(state , action) => {
+         state.cart.push(state.product.find( e => e._id === action.payload ))
+       },
+       removeToCart:(state , action) => {
+       const newcart = state.cart.filter( e => e._id !== action.payload)
+       state.cart = newcart
+       state.text= newcart
        }
     },
-    extraReducers:(builder) => {
-     builder.addCase(Display_product.fulfilled,(state,action) => {
-        console.log(action.payload)
-        state.product = action.payload
-     })
-    }
+   
 })
 
-export const { setProduct } = ProuctSlice.actions
+export const { setProduct ,addToCart ,removeToCart} = ProuctSlice.actions
 export default  ProuctSlice.reducer

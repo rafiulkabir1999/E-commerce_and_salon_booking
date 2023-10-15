@@ -1,15 +1,13 @@
-import React from 'react'
+import { faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar,faStarHalf } from '@fortawesome/free-solid-svg-icons'
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../../Reducer/productSlice'
 
 export default function Product(props) {
 
    const details = props.details || ''
-   //const URL = props.details.img.regular.url || ""
-  // const img = props.details.img.regular.url || ''
- // console.log(props.details.img.regular)
- //  console.log(props)
- //const details = details.e;
+ const dispatch = useDispatch()
  const handleShowingCartButton = (id) => {
     document.getElementById(id).classList.add('h-40')
     document.getElementById(id +"button").classList.remove('hidden')
@@ -38,7 +36,7 @@ export default function Product(props) {
 
     <div className='flex flex-col  '>
         <p className='text-gray-700 text-sm font-bold'>{details.name}</p>
-        <p className='  text-gray-800 text-sm font-bold '>400$</p>
+        <p className='  text-gray-800 text-sm font-bold '>{details.price}</p>
         
         <div id={details._id + "button"} className=' hidden'>
         <div className='p-2'>
@@ -49,7 +47,9 @@ export default function Product(props) {
             <FontAwesomeIcon icon={faStarHalf} color='#facc15'></FontAwesomeIcon>
         </div>
         
-          <button className='bg-yellow-400 p-1 px-6 rounded-full font-bold'>Add to Cart</button>
+          <button 
+          onClick={()=>{dispatch(addToCart(details._id))}}
+          className='bg-yellow-400 p-1 px-6 rounded-full font-bold'>Add to Cart</button>
        </div>
     </div>
 
