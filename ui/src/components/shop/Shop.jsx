@@ -1,27 +1,24 @@
 import { faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { setProduct } from '../../Reducer/productSlice'
-import { useGetProductsQuery } from '../../Reducer/productSliceQ'
-import Loader from '../loader/loader'
+import React from 'react'
+import { Link, useParams } from 'react-router-dom'
+import ByCetegory from './ByCetegory'
 import ShowAllProduct from './ShowAllProduct'
 export default function Shop() {
 
-const dispatch = useDispatch();
-//const [getProducts , { Loading }] = useGetProductsMutation()
-const {data ,isLoading ,isSuccess} = useGetProductsQuery()
 
+const {cetegory} = useParams();
+//const [getProducts , { Loading }] = useGetProductsMutation()
+
+
+//console.log(cetegroy)
 
  const selectColor = (id) => {
   document.getElementById(id).classList.toggle('hidden')
  }
 
- useEffect(()=>{
-   dispatch(setProduct(data))
-  console.log('hi',isLoading)
- })
 
+console.log(cetegory)
 
 
   return (
@@ -57,11 +54,12 @@ const {data ,isLoading ,isSuccess} = useGetProductsQuery()
             </div>
 
             <div className='list-none flex flex-col text-left space-y-4 pt-4 font-semibold px-8'>
-              <li>Cetegory</li>
-              <li>Phone</li>
-              <li>Electronics</li>
-              <li>Cosmecits</li>
-              <li>Bag</li>
+              <Link to='/product/Electronics' >Electronics</Link>
+              <Link to='/product/Phone' >Phone</Link>
+              <Link to='/product/Cosmecits' >Cosmecits</Link>
+              <Link to='/product/Bag' >Bag</Link>
+              <Link to='/product/Food' >Food</Link>
+             
             </div>
        </div>
 
@@ -218,7 +216,8 @@ const {data ,isLoading ,isSuccess} = useGetProductsQuery()
 
           
                 
-              {isLoading ? <Loader/> :  <ShowAllProduct/>}
+             {cetegory ? <ByCetegory cetegory={cetegory}/> : <ShowAllProduct/>
+             }
                  
            
       </div>

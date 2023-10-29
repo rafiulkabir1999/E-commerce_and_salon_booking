@@ -7,10 +7,14 @@ const productSlice = apiSlice.injectEndpoints({
             query:()=>'/product',
            
         }),
+        getProductByCetegory: builder.query({
+            query: (cetegory) => `/product/search/${cetegory}`
+        })
 
     })
 })
 
 export const {
-  useGetProductsQuery
+  useGetProductsQuery,
+  useGetProductByCetegoryQuery
 } = productSlice

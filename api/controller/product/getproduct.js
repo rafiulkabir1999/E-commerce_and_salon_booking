@@ -17,6 +17,17 @@ const getproductbyid = async(req,res,next) => {
     }
 }
 
+const getProductByCetegory = async(req, res , next) => {
+    console.log(req.params.cetegory)
+    try {
+        const product = await Product_Model.find({cetegory: req.params.cetegory})
+        console.log(product)
+        res.send(product)
+    } catch (error) {
+        next(error)
+    }
+}
 
 
-module.exports = {getproduct,getproductbyid}
+
+module.exports = {getproduct,getproductbyid ,getProductByCetegory}
