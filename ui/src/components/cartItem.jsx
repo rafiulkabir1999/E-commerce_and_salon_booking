@@ -2,13 +2,15 @@ import { faHeart, faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-i
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { removeToCart } from '../Reducer/productSlice'
+import { addQuantity, removeToCart } from '../Reducer/productSlice'
 
 export default function CartItem(props) {
 
-
 const dispatch = useDispatch();
 const [details , setdetails] = useState(props.details)
+//const {quantity} = useSelector(state => state.product.cart)
+
+
   return (
     <div className='flex justify-between border-b-2'>
       <div className="flex ">
@@ -39,10 +41,10 @@ const [details , setdetails] = useState(props.details)
 
       <div className='flex flex-col pt-6 px-10 '>
         <div className='p-3 text-md font-bold flex items-center'>
-        <span className='px-2 py-1 rounded m-1 border cursor-pointer'>
+        <span onClick={() => dispatch(addQuantity(details._id))} className='px-2 py-1 rounded m-1 border cursor-pointer'>
            <FontAwesomeIcon icon={faMinus} />
           </span>
-          <div className='p-1'>1</div>
+          <div className='p-1'>{details.quantity}</div>
           <span className='px-2 py-1 rounded m-1 border cursor-pointer'>
          <FontAwesomeIcon icon={faPlus}/>
           </span>
