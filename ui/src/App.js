@@ -6,9 +6,9 @@ import Signup from './components/Accounts/Signup/signup';
 import Booknow from './components/Booknow/Booknow';
 import Cart from './components/Cart/Cart';
 import Homepage from './components/Homepage/homepage';
-import Details from './components/details/details';
 import Footer from './components/footer/footer';
 import Nav from './components/nav/nav';
+import DetailsProduct from "./components/product/detailsProduct";
 import Profile from './components/profile/profile';
 import Shop from './components/shop/Shop';
 import ProtectedRoute from './userAuth';
@@ -23,8 +23,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Homepage/>}/>
           <Route path='/shop' element={<Shop/>}/>
-          <Route path='/product/:cetegory' element={<Shop/>}/>
-          <Route path='/details/:id' element={<Details/>}/>
+          <Route path='/products/:cetegory' element={<Shop/>}/>
+          <Route path='/product/:id' element={<DetailsProduct/>}/>
           <Route path='/signup' element={<Signup/>}/>
           <Route path='/login' element={<Login/>}/>
          

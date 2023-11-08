@@ -2,6 +2,7 @@ import { faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { addToCart } from '../../Reducer/productSlice'
 
 export default function Product(props) {
@@ -23,16 +24,18 @@ export default function Product(props) {
 
   return (
     <div 
-
+    
     className='flex flex-col grow  overflow-hidden h-80 hover:shadow'
     onMouseEnter={()=>handleShowingCartButton(details._id)}
     onMouseLeave={() => handleHidingCartButton(details._id)}
     >
+    <Link to={`/product/${details._id}`}>
     <img 
     id={details._id}
     className='w-60 transition duration-150 ease-out p-6 mx-auto'
     src={props.url}//{details.img.regular.url || ""} 
     alt="" />
+    </Link>
 
     <div className='flex flex-col  '>
         <p className='text-gray-700 text-sm font-bold'>{details.name}</p>

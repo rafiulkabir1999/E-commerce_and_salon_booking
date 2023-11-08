@@ -1,24 +1,40 @@
 import { faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import ByCetegory from './ByCetegory'
 import ShowAllProduct from './ShowAllProduct'
 export default function Shop() {
 
-
-const {cetegory} = useParams();
+const navigate = useNavigate()
+const url = useLocation()
+const {cetegory , price , size} = useParams();
 //const [getProducts , { Loading }] = useGetProductsMutation()
 
+const [getquery, setquery] = useState({price:1,color:[],size:0})
 
 //console.log(cetegroy)
 
  const selectColor = (id) => {
   document.getElementById(id).classList.toggle('hidden')
+  // setquery( {
+  //   ...getquery,
+  //   [getquery.color.push(id)]
+   
+  // } )
+  console.log(getquery.color)
+  navigate(`?price=${getquery.price + "&&"}${getquery.color.map(e=> {return ('?color=' + e )})}`)
  }
 
 
-console.log(cetegory)
+const filterSearch = (e) => {
+  setquery( {
+    ...getquery,
+    price:e.target.value
+   
+  } )
+navigate(url.pathname + `?price=${(e.target.value) * 500}`)
+}
 
 
   return (
@@ -54,11 +70,11 @@ console.log(cetegory)
             </div>
 
             <div className='list-none flex flex-col text-left space-y-4 pt-4 font-semibold px-8'>
-              <Link to='/product/Electronics' >Electronics</Link>
-              <Link to='/product/Phone' >Phone</Link>
-              <Link to='/product/Cosmecits' >Cosmecits</Link>
-              <Link to='/product/Bag' >Bag</Link>
-              <Link to='/product/Food' >Food</Link>
+              <Link to='/products/Electronics' >Electronics</Link>
+              <Link to='/products/Phone' >Phone</Link>
+              <Link to='/products/Cosmecits' >Cosmecits</Link>
+              <Link to='/products/Bag' >Bag</Link>
+              <Link to='/products/Food' >Food</Link>
              
             </div>
        </div>
@@ -76,20 +92,23 @@ console.log(cetegory)
                   </div>
                 </div>
 
-                <div className='p-4 flex flex-col space-y-6'>
+                <div className='p-6 flex flex-col '>
                   <div className='flex text-right font-bold text-xs '>
-                      <div className='grow border-green-500 border-b-4 py-1 ' >500</div>
-                      <div className='grow border-orange-500 border-b-4 py-1' >1k</div>
-                      <div className='grow border-yellow-500 border-b-4 py-1' >1k</div>
-                      <div className='grow border-pink-500 border-b-4 py-1' >2k</div>
-                      <div className='grow border-purple-500 border-b-4 py-1' >5k</div>
+                      <div className='grow border-green-500 border-b-8 py-1 rounded-l  ' >1000</div>
+                      <div className='grow border-orange-500 border-b-8 py-1 ' >1500</div>
+                    
+                      <div className='grow border-pink-500 border-b-8 py-1 rounded-r' >2000</div>
+                      
                   </div>
                     <input
+                      onChange={filterSearch}
                       type="range"
-                      className="bg-blue-200 p-2  h-2 w-full cursor-pointer appearance-none rounded-lg border-transparent bg-neutral-200"
-                      min="0"
-                      max="5"
-                      id="customRange2" />
+                      className="bg-blue-200    w-full cursor-pointer appearance-none rounded-lg border-transparent bg-neutral-200"
+                      min="1"
+                      max="4"
+                      id="customRange2"
+                      value={getquery.price}
+                      />
 
                 </div>
           </div>

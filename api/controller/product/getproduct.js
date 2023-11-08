@@ -1,8 +1,15 @@
 const Product_Model = require("../../model/product.js")
 const getproduct = async(req,res,next) => {
+
     try {
+        const price  = req.query.price
         const product = await Product_Model.find();
-        res.send(product)
+
+        if(price){
+        const filterProduct = product.filter(e => e.price <= price)
+        res.send(filterProduct)
+        }
+        else res.send(product)
     } catch (error) {
         next(error)
     }
