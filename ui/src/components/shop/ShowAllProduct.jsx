@@ -19,8 +19,8 @@ export default function ShowAllProduct() {
   })
 
   const price = getQueryParams().split('=')[1]
-  console.log(price)
-    if(price){
+
+    if(price === 'price'){
      product =  data.filter(e => e.price <= JSON.parse(price))
      
     // product = filterData

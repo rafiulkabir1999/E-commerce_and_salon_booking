@@ -1,39 +1,33 @@
 import { faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import ByCetegory from './ByCetegory'
 import ShowAllProduct from './ShowAllProduct'
 export default function Shop() {
 
 const navigate = useNavigate()
-const url = useLocation()
 const {cetegory , price , size} = useParams();
 //const [getProducts , { Loading }] = useGetProductsMutation()
 
-const [getquery, setquery] = useState({price:1,color:[],size:0})
+const [getquery, setquery] = useState({price:1,color:'',size:0})
 
 //console.log(cetegroy)
-
- const selectColor = (id) => {
-  document.getElementById(id).classList.toggle('hidden')
-  // setquery( {
-  //   ...getquery,
-  //   [getquery.color.push(id)]
-   
-  // } )
-  console.log(getquery.color)
-  navigate(`?price=${getquery.price + "&&"}${getquery.color.map(e=> {return ('?color=' + e )})}`)
+//Filter Color
+ const selectColor = (color) => { 
+ document.getElementById(color).classList.toggle('hidden')
+ navigate(`?color=${color}`)
+  
  }
 
-
+//filter Price 
 const filterSearch = (e) => {
   setquery( {
     ...getquery,
     price:e.target.value
    
   } )
-navigate(url.pathname + `?price=${(e.target.value) * 500}`)
+navigate( `?price=${(e.target.value) * 500}`)
 }
 
 
@@ -92,7 +86,7 @@ navigate(url.pathname + `?price=${(e.target.value) * 500}`)
                   </div>
                 </div>
 
-                <div className='p-6 flex flex-col '>
+                <div className='p-6 flex flex-col py-2 m-2 space-y-2'>
                   <div className='flex text-right font-bold text-xs '>
                       <div className='grow border-green-500 border-b-8 py-1 rounded-l  ' >1000</div>
                       <div className='grow border-orange-500 border-b-8 py-1 ' >1500</div>
